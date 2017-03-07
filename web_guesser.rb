@@ -15,27 +15,33 @@ class WebGuesser
   def restart
     @secret_number = rand(99) + 1
     @@guesses = 5
-    message = "Sorry! Out of guesses! Try again."
+  end
+
+  def set_color(color)
+    @color = color
   end
 
   def check_guess(guess, secret_number)
     @@guesses -= 1
-    restart if @@guesses == 0
+    if @@guesses == 0
+      restart
+      return "Sorry! Out of guesses! Try again."
+    end
     if guess == secret_number
-      @color = "Green"
-      message = "Correct! \nThe SECRET NUMBER is #{secret_number}."
+      set_color("Green")
+      "Correct! \nThe SECRET NUMBER is #{secret_number}."
     elsif guess > (secret_number + 5)
-      @color = "Red"
-      message = "Way too high!#{secret_number}, #{@@guesses}"
+      set_color("Red")
+      "Way too high!"
     elsif guess < (secret_number - 5)
-      @color = "Red"
-      message = "Way too low!#{secret_number}, #{@@guesses}"
+      set_color("Red")
+      "Way too low!"
     elsif guess > secret_number
-      @color = "#ffb3b3"
-      message = "Too high#{secret_number}, #{@@guesses}!"
+      set_color("#ffb3b3")
+      "Too high!"
     elsif guess < secret_number
-      @color = "#ffb3b3"
-      message = "Too low#{secret_number}, #{@@guesses}!"
+      set_color("#ffb3b3")
+      "Too low!"
     end
   end
 end
